@@ -52,8 +52,16 @@ public class PlatformController : MonoBehaviour {
         
         float posX = Mathf.Clamp(curPosition.x, leftBorder + _platformBoundSize / 2, rightBorder - _platformBoundSize / 2);
         _myTransform.position = new Vector3(posX, curPosition.y);
-;
 
 
+
+    }
+
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        if (coll.gameObject.CompareTag("SpeedBoost"))
+        {
+            GameMaster.instance.SetBonus(BonusTypes.SpeedBoost);
+        }
     }
 }

@@ -6,25 +6,32 @@ public class BallController : MonoBehaviour {
 
 
     private float _ballSpeed;
+    private float _speedMultyplier;
     private Vector2 _moveDirection;
     private Transform _myTransform;
 
-    public delegate void BallDestroyEventHandler();
+    private delegate void BallDestroyEventHandler();
 
-    public event BallDestroyEventHandler onBallDestroy;
+    private event BallDestroyEventHandler onBallDestroy;
 
     // Use this for initialization
     void Start () {
         _myTransform = transform;
         _ballSpeed = 20;
+        _speedMultyplier = 1;
         _moveDirection = Vector3.up;
 
         onBallDestroy += GameMaster.instance.BallsDecrement;
     }
+
+    public void SetSpeedMultyplier(float speedMultyplier)
+    {
+        this._speedMultyplier = speedMultyplier;
+    }
 	
-	// Update is called once per frame
+    // Update is called once per frame
 	void Update () {
-        transform.Translate(_moveDirection * Time.deltaTime * _ballSpeed);
+        _myTransform.Translate(_moveDirection * Time.deltaTime * _ballSpeed * _speedMultyplier);
         
 	}
 
