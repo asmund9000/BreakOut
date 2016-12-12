@@ -9,6 +9,7 @@ public enum BonusTypes { SpeedBoost, IncreasePlatform, CloneBall };
 public delegate void BrickDestroyEventHandler(BrickTypes _brickType);
 public delegate void TakeBonusEventHandler(BonusTypes bonusType);
 public delegate void RemoveBonusEventHandler(BonusTypes bonusType);
+public delegate void OnUpdateEventHandler(BonusTypes bonusType);
 
 public class GameMaster : MonoBehaviour  {
 
@@ -20,7 +21,7 @@ public class GameMaster : MonoBehaviour  {
 
     public List<BallController> balls;
 
-    private bool speedBoostActive;
+    public bool speedBoostActive;
 
     public int CurrentScoreCount {
         get { return _currentScoreCount ; }
@@ -82,7 +83,7 @@ public class GameMaster : MonoBehaviour  {
     }
     void Start()
     {
-        SetBonus(BonusTypes.SpeedBoost);
+       // SetBonus(BonusTypes.SpeedBoost);
     }
 
     public void SetBonus(BonusTypes bonusType)
@@ -90,13 +91,23 @@ public class GameMaster : MonoBehaviour  {
         switch (bonusType)
         {
             case BonusTypes.SpeedBoost:
-                SpeedBoost speedBoost = new SpeedBoost();
-                speedBoostActive = true;
-                foreach (BallController ball in balls)
+
+                SpeedBoost speedBoost = GameObject.FindObjectOfType<SpeedBoost>();
+                if (speedBoost == null)
                 {
-                    // GameObject speedBonus = Instantiate(new GameObject());
-                    ball.SetSpeedMultyplier(2);
+                    GameObject go = new GameObject();
+                    go.name = "SpeedBoost";
+                    speedBoost = go.AddComponent<SpeedBoost>();
                 }
+
+                speedBoost.ApplyBonus();
+                //speedBoostActive = true;
+               
+                //foreach (BallController ball in balls)
+                //{
+                //    // GameObject speedBonus = Instantiate(new GameObject());
+                //    ball.SetSpeedMultyplier(2);
+                //}
                 break;
             case BonusTypes.IncreasePlatform:
                 break;
@@ -106,25 +117,25 @@ public class GameMaster : MonoBehaviour  {
                 break;
         }
     }
-    public void RemoveBonus(BonusTypes bonusType)
-    {
-        switch (bonusType)
-        {
-            case BonusTypes.SpeedBoost:
-                speedBoostActive = false;
-                foreach (BallController ball in balls)
-                {
-                    ball.SetSpeedMultyplier(1);
-                }
-                break;
-            case BonusTypes.IncreasePlatform:
-                break;
-            case BonusTypes.CloneBall:
-                break;
-            default:
-                break;
-        }
-    }
+    //public void RemoveBonus(BonusTypes bonusType)
+    //{
+    //    switch (bonusType)
+    //    {
+    //        case BonusTypes.SpeedBoost:
+    //            //speedBoostActive = false;
+    //            //foreach (BallController ball in balls)
+    //            //{
+    //            //    ball.SetSpeedMultyplier(1);
+    //            //}
+    //            break;
+    //        case BonusTypes.IncreasePlatform:
+    //            break;
+    //        case BonusTypes.CloneBall:
+    //            break;
+    //        default:
+    //            break;
+    //    }
+    //}
 
     public void PrintMessage(string s)
     {

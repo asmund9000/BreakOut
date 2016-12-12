@@ -2,5 +2,6 @@
 
 public interface ITimerBonus : ISimpleBonus
 {
-    void RemoveBonus(object sender, ElapsedEventArgs e);
+    void Update();
+    void RemoveBonus();
 }
