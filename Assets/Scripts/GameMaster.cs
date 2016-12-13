@@ -112,6 +112,15 @@ public class GameMaster : MonoBehaviour  {
             case BonusTypes.IncreasePlatform:
                 break;
             case BonusTypes.CloneBall:
+                CloneBall cloneBall = GameObject.FindObjectOfType<CloneBall>();
+                if (cloneBall == null)
+                {
+                    GameObject go = new GameObject();
+                    go.name = "CloneBall";
+                    cloneBall = go.AddComponent<CloneBall>();
+                }
+
+                cloneBall.ApplyBonus();
                 break;
             default:
                 break;

@@ -48,6 +48,7 @@ public class SpeedBoost : MonoBehaviour, ITimerBonus
         {
             ball.SetSpeedMultyplier(1);
         }
-        Destroy(gameObject);
+       // Destroy(gameObject);
     }
+
 }

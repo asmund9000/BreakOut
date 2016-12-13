@@ -62,6 +62,14 @@ public class PlatformController : MonoBehaviour {
         if (coll.gameObject.CompareTag("SpeedBoost"))
         {
             GameMaster.instance.SetBonus(BonusTypes.SpeedBoost);
+
+        }
+
+        if (coll.gameObject.CompareTag("CloneBall"))
+        {
+            Debug.Log("CLONE");
+            GameMaster.instance.SetBonus(BonusTypes.CloneBall);
+
         }
     }
 }

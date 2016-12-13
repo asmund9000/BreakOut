@@ -7,7 +7,7 @@ public class BallController : MonoBehaviour {
 
     private float _ballSpeed;
     private float _speedMultyplier;
-    private Vector2 _moveDirection;
+    private Vector2 _moveDirection = Vector3.up;
     private Transform _myTransform;
 
     private delegate void BallDestroyEventHandler();
@@ -19,7 +19,6 @@ public class BallController : MonoBehaviour {
         _myTransform = transform;
         _ballSpeed = 20;
         _speedMultyplier = 1;
-        _moveDirection = Vector3.up;
 
         onBallDestroy += GameMaster.instance.BallsDecrement;
     }
@@ -63,14 +62,32 @@ public class BallController : MonoBehaviour {
                 f = 1 - (contact.point.x - leftX) / (centerX - leftX);
             }
 
-            
+            //  
+
         }
 
 
-        _moveDirection = Vector3.Reflect(_moveDirection, Quaternion.Euler(0, 0, 30 * f) * contact.normal);
+
+         SetMoveDirection(Vector3.Reflect(_moveDirection, Quaternion.Euler(0, 0, 30 * f) * contact.normal));
+
+       // _moveDirection = Vector3.Reflect(_moveDirection, Quaternion.Euler(0, 0, 30 * f) * contact.normal);
 
 
+    }
 
+    public float GetSpeedMultyplier()
+    {
+        return _speedMultyplier;
+    }
+
+    public void SetMoveDirection(Vector3 moveDirection)
+    {
+        this._moveDirection = moveDirection;
+    }
+
+    public Vector3 GetMoveDirection()
+    {
+        return _moveDirection;
     }
 
 
