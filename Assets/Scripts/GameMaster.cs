@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public enum BrickTypes { Easy, Medium, Hard };
 public enum BonusTypes { SpeedBoost, IncreasePlatform, CloneBall };
 
-public delegate void BrickDestroyEventHandler(BrickTypes _brickType);
+public delegate void BrickDestroyEventHandler(IBrick brick);
 public delegate void TakeBonusEventHandler(BonusTypes bonusType);
 public delegate void RemoveBonusEventHandler(BonusTypes bonusType);
 public delegate void OnUpdateEventHandler(BonusTypes bonusType);
@@ -33,6 +33,7 @@ public class GameMaster : MonoBehaviour  {
     }
 
     private int _currentScoreCount;
+    private float bonusChanse;
 
     // public delegate void MethodContainer();
 
@@ -72,18 +73,28 @@ public class GameMaster : MonoBehaviour  {
         }
     }
 
-    public void BricksDecrement(BrickTypes brickType)
+    public void BricksDecrement(IBrick brick)
     {
         BricksCount--;
-        CurrentScoreCount = CurrentScoreCount + GetRewardForBrick(brickType);
+        CurrentScoreCount = CurrentScoreCount + GetRewardForBrick(brick.GetBrickType());
         if (BricksCount == 0)
         {
             Win();
         }
+
+        CreateBonusObject(brick);
+    }
+
+    public void CreateBonusObject(IBrick brick)
+    {
+        if (Random.Range(0, 100) < bonusChanse) Instantiate(bonusesPrefs[Random.Range(0, bonusesPrefs.Length)], brick.GetBrickPosition(), Quaternion.identity);
+
     }
     void Start()
     {
-       // SetBonus(BonusTypes.SpeedBoost);
+        // SetBonus(BonusTypes.SpeedBoost);
+        bonusChanse = 15;
+       StartCoroutine( LevelsReader.JsonReader());
     }
 
     public void SetBonus(BonusTypes bonusType)
@@ -101,13 +112,6 @@ public class GameMaster : MonoBehaviour  {
                 }
 
                 speedBoost.ApplyBonus();
-                //speedBoostActive = true;
-               
-                //foreach (BallController ball in balls)
-                //{
-                //    // GameObject speedBonus = Instantiate(new GameObject());
-                //    ball.SetSpeedMultyplier(2);
-                //}
                 break;
             case BonusTypes.IncreasePlatform:
                 break;

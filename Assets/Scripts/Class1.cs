@@ -9,5 +9,5 @@ public class Level
     public int id { get; set; }
     public int rows { get; set; }
     public int columns { get; set; }
-    public int[][] _struct { get; set; }
+    public int[][] levelStruct { get; set; }
 }

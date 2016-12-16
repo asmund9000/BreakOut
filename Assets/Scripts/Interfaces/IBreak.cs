@@ -6,6 +6,8 @@
 
     void BrickDestroy();
 
+
+    UnityEngine.Vector3 GetBrickPosition();
     BrickTypes GetBrickType();
 
     int Hp { get; set; }

@@ -8,11 +8,11 @@ public class SimpleBreak : IBrick
 
     public event BrickDestroyEventHandler onBrickDestroy;
 
-    public SimpleBreak(BrickController brickController)
+    public SimpleBreak(BrickController brickController, BrickTypes brickType, int hp)
     {
         this._brickController = brickController;
-        _brickType = BrickTypes.Easy;
-        Hp = 1;
+        this._brickType = brickType;
+        Hp = hp;
         onBrickDestroy += GameMaster.instance.BricksDecrement;
     }
 
@@ -25,9 +25,14 @@ public class SimpleBreak : IBrick
         }
     }
 
+    public Vector3 GetBrickPosition()
+    {
+        return _brickController.GetTransform().position;
+    }
+
     public void BrickDestroy()
     {
-        onBrickDestroy(_brickType);
+        onBrickDestroy(this);
         _brickController.BrickDestroy();
     }
 
