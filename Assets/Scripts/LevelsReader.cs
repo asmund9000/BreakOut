@@ -52,14 +52,15 @@ public static class LevelsReader  {
         if (jsonString != null)
         {
             ranksDeserialize = JsonConvert.DeserializeObject<Rootobject>(jsonString);
+            int currentLevel = LevelManager.instance.currentLevel;
+          //  Debug.Log(jsonString);
 
-            Debug.Log(jsonString);
-
-            for (int i = 0; i < ranksDeserialize.levels[0].levelStruct.Length; i++)
+            for (int i = 0; i < ranksDeserialize.levels[currentLevel].levelStruct.Length; i++)
             {
-                for (int j = 0; j < ranksDeserialize.levels[0].levelStruct[i].Length; j++)
+                for (int j = 0; j < ranksDeserialize.levels[currentLevel].levelStruct[i].Length; j++)
                 {
-                    Debug.Log(ranksDeserialize.levels[0].levelStruct[i][j]);
+                    //  Debug.Log(ranksDeserialize.levels[0].levelStruct[i][j]);
+                    LevelCreator.instance.CreateBrickObject(ranksDeserialize.levels[currentLevel].levelStruct[i][j], ranksDeserialize.levels[currentLevel].levelStruct[i].Length, ranksDeserialize.levels[currentLevel].levelStruct.Length, j, i);
                 }
 
             }

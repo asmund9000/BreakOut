@@ -1,10 +1,10 @@
 ﻿
 public class Rootobject
 {
-    public Level[] levels { get; set; }
+    public LevelConfig[] levels { get; set; }
 }
 
-public class Level
+public class LevelConfig
 {
     public int id { get; set; }
     public int rows { get; set; }

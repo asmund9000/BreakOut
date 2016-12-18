@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 [ExecuteInEditMode]
 [RequireComponent(typeof(PopupPanel))]
@@ -21,9 +22,20 @@ public class FinishPopup : MonoBehaviour {
 	void Awake () {
 		panel = GetComponent<PopupPanel> ();
 
-		// нажатие кнопки меню обрабатывается в Game:Start
-		
-	}
+        // нажатие кнопки меню обрабатывается в Game:Start
+        nextLevelButton.onClick.AddListener(() => {
+            Time.timeScale = 1f;
+            bool nextAvaliable = LevelManager.instance.NextLevel();
+            string nextScene;
+            if (nextAvaliable)
+                nextScene = "Game";
+            else
+                nextScene = "Levels";
+
+            SceneManager.LoadScene(nextScene);
+        });
+
+    }
 
 	public void Configure(bool success) {
 		winText.gameObject.SetActive(success);

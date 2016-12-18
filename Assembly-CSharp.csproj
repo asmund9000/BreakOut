@@ -49,6 +49,9 @@
      <Compile Include="Assets\LeanTween\Testing\TestingColorTweening.cs" />
      <Compile Include="Assets\LeanTween\Testing\TestingIssue.cs" />
      <Compile Include="Assets\LeanTween\Testing\TestingIssue2.cs" />
+     <Compile Include="Assets\LevelButton.cs" />
+     <Compile Include="Assets\Scenes\Level.cs" />
+     <Compile Include="Assets\Scenes\LevelManager.cs" />
      <Compile Include="Assets\Scripts\BallController.cs" />
      <Compile Include="Assets\Scripts\Bonuses\CloneBall.cs" />
      <Compile Include="Assets\Scripts\Bonuses\SpeedBoost.cs" />
@@ -65,8 +68,16 @@
      <Compile Include="Assets\Scripts\Interfaces\IBreak.cs" />
      <Compile Include="Assets\Scripts\Interfaces\ISimpleBonus.cs" />
      <Compile Include="Assets\Scripts\Interfaces\ITimerBonus.cs" />
+     <Compile Include="Assets\Scripts\LevelCreator.cs" />
+     <Compile Include="Assets\Scripts\LevelsGrid.cs" />
      <Compile Include="Assets\Scripts\LevelsReader.cs" />
+     <Compile Include="Assets\Scripts\Menu.cs" />
      <Compile Include="Assets\Scripts\PlatformController.cs" />
+     <Compile Include="Assets\Scripts\PlayerPrefsX.cs" />
+     <Compile Include="Assets\Scripts\Xml\ItemInfo.cs" />
+     <Compile Include="Assets\Scripts\Xml\LevelInfo.cs" />
+     <Compile Include="Assets\Scripts\Xml\LevelsInfo.cs" />
+     <Compile Include="Assets\Scripts\Xml\XmlInfo.cs" />
      <None Include="Assets\LeanTween\ReadMe.txt" />
      <None Include="Assets\Resources\Pack\Read Me.txt" />
      <None Include="Assets\levels.xml" />

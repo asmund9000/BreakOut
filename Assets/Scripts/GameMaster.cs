@@ -7,21 +7,22 @@ public enum BrickTypes { Easy, Medium, Hard };
 public enum BonusTypes { SpeedBoost, IncreasePlatform, CloneBall };
 
 public delegate void BrickDestroyEventHandler(IBrick brick);
-public delegate void TakeBonusEventHandler(BonusTypes bonusType);
-public delegate void RemoveBonusEventHandler(BonusTypes bonusType);
-public delegate void OnUpdateEventHandler(BonusTypes bonusType);
+
 
 public class GameMaster : MonoBehaviour  {
 
     public static GameMaster instance;
     public Text scoreLabel;
+    public PopupPanel finishPopup;
     public GameObject[] bonusesPrefs;
     public int BallsCount { get; set; }
     public int BricksCount { get; set; }
 
     public List<BallController> balls;
 
+
     public bool speedBoostActive;
+
 
     public int CurrentScoreCount {
         get { return _currentScoreCount ; }
@@ -40,6 +41,7 @@ public class GameMaster : MonoBehaviour  {
 
     private void Awake()
     {
+      //  CreateBrickObject(6, 6);
        instance = this;
     }
 
@@ -87,13 +89,19 @@ public class GameMaster : MonoBehaviour  {
 
     public void CreateBonusObject(IBrick brick)
     {
-        if (Random.Range(0, 100) < bonusChanse) Instantiate(bonusesPrefs[Random.Range(0, bonusesPrefs.Length)], brick.GetBrickPosition(), Quaternion.identity);
+        Vector3 pos = brick.GetBrickPosition();
+        GameObject obj = bonusesPrefs[Random.Range(0, bonusesPrefs.Length)];
 
+        if (Random.Range(0, 100) < bonusChanse)
+        {
+            Debug.Log(obj);
+            Instantiate(obj, pos, Quaternion.identity);
+        }
     }
     void Start()
     {
         // SetBonus(BonusTypes.SpeedBoost);
-        bonusChanse = 15;
+        bonusChanse = 5;
        StartCoroutine( LevelsReader.JsonReader());
     }
 
@@ -159,7 +167,8 @@ public class GameMaster : MonoBehaviour  {
 
     void Win()
     {
-      //  Debug.Log("Win");
+        LevelManager.instance.CompleteLevel(0);
+        finishPopup.OpenPanel();
     }
 
     void Lose()
@@ -167,10 +176,6 @@ public class GameMaster : MonoBehaviour  {
        // Debug.Log("Lose");
     }
 
-    class BonusController : MonoBehaviour
-    {
-
-    }
 }
 
 

@@ -6,7 +6,7 @@ public class BallController : MonoBehaviour {
 
 
     private float _ballSpeed;
-    private float _speedMultyplier;
+    private float _speedMultyplier = 1;
     private Vector2 _moveDirection = Vector3.up;
     private Transform _myTransform;
 
@@ -18,7 +18,7 @@ public class BallController : MonoBehaviour {
     void Start () {
         _myTransform = transform;
         _ballSpeed = 20;
-        _speedMultyplier = 1;
+       
 
         onBallDestroy += GameMaster.instance.BallsDecrement;
     }

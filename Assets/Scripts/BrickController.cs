@@ -5,20 +5,23 @@ using UnityEngine;
 
 public class BrickController : MonoBehaviour {
 
-    public IBrick brick;
-
+    public BrickTypes brickType;
+    private IBrick _brick;
     private Transform _myTransform;
 
-    void Start()
+    public void Init(IBrick brick)
     {
-        brick = new SimpleBreak(this, BrickTypes.Easy, 1);
+        this._myTransform = transform;
+        this._brick = brick;
+      //  brick = new SimpleBreak(this);
+      //   Debug.Log("!!!!!!!!!!!!!!!!");
     }
 
     public void OnCollisionEnter2D(Collision2D coll)
     {
         if (coll.gameObject.CompareTag("ball"))
         {
-            brick.TakeDamage();
+            _brick.TakeDamage();
         }
     }
         

@@ -11,7 +11,7 @@ public class CloneBall : MonoBehaviour, ISimpleBonus
         {
             BallController ball = Instantiate(GameMaster.instance.balls[0]) ;
             ball.SetSpeedMultyplier(GameMaster.instance.balls[0].GetSpeedMultyplier());
-             ball.SetMoveDirection(Quaternion.Euler(0, 0, 360 * UnityEngine.Random.value) * ball.GetMoveDirection() );
+            ball.SetMoveDirection(Quaternion.Euler(0, 0, 360 * UnityEngine.Random.value) * ball.GetMoveDirection() );
             GameMaster.instance.balls.Add(ball);
         }
        
