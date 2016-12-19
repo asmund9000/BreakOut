@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -16,22 +17,24 @@ public class PausePopup : MonoBehaviour {
 	
 	void Awake () {
 		panel = GetComponent<PopupPanel>();
+        menuButton.onClick.AddListener(() => ToMenu());
+        replayButton.onClick.AddListener(() => ReloadScene());
+
+    }
 
 
+    void ToMenu()
+    {
+        SceneManager.LoadScene("Levels");
+    }
 
-	}
+    void ReloadScene()
+    {
+        SceneManager.LoadScene("Game");
+    }
 
-	/*
-	void LoadLevels () {
-		Main.CreateActionList();
-		Main.AddBackAction(() => {
-			Main.LoadSceneS("Menu");	
-		});
-		Application.LoadLevel("LevelsGrid");
-	}//*/
-
-	#if UNITY_EDITOR
-	[CanEditMultipleObjects]
+#if UNITY_EDITOR
+    [CanEditMultipleObjects]
 	[CustomEditor(typeof(PausePopup))]
 	public class PausePopupInspector : Editor {
 		string[] propertyFilter = new string[] {"m_Script"};

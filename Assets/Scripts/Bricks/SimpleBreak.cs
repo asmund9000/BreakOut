@@ -4,7 +4,24 @@ public class SimpleBrick : IBrick
 {
     private BrickController _brickController;
     private BrickTypes _brickType;
-    public int Hp { get; set; }
+    private int _hp;
+
+    public int Hp
+    {
+        get
+        {
+            return _hp;
+        }
+        set
+        {
+            _hp = value;
+            if (_hp == 0)
+            {
+                BrickDestroy();
+            }
+        }
+    }
+
 
     public event BrickDestroyEventHandler onBrickDestroy;
 
@@ -33,10 +50,7 @@ public class SimpleBrick : IBrick
     public void TakeDamage()
     {
         Hp--;
-        if (Hp == 0)
-        {
-            BrickDestroy();
-        }
+        _brickController.BrickHit();
     }
 
     public Vector3 GetBrickPosition()
@@ -46,6 +60,7 @@ public class SimpleBrick : IBrick
 
     public void BrickDestroy()
     {
+       
         onBrickDestroy(this);
         _brickController.BrickDestroy();
     }

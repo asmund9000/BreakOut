@@ -64,6 +64,7 @@ public static class LevelsReader  {
                 }
 
             }
+            GameMaster.instance.gameStarted = true;
 
         }
     }

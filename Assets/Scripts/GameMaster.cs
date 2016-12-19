@@ -2,30 +2,64 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public enum BrickTypes { Easy, Medium, Hard };
 public enum BonusTypes { SpeedBoost, IncreasePlatform, CloneBall };
 
 public delegate void BrickDestroyEventHandler(IBrick brick);
-
+public delegate void BallDestroyEventHandler(BallController ball);
 
 public class GameMaster : MonoBehaviour  {
 
     public static GameMaster instance;
     public Text scoreLabel;
-    public PopupPanel finishPopup;
+    public FinishPopup finishPopup;
     public GameObject[] bonusesPrefs;
-    public int BallsCount { get; set; }
-    public int BricksCount { get; set; }
+    public AudioSource brickHit;
+    public AudioSource brickDestroy;
 
     public List<BallController> balls;
 
 
-    public bool speedBoostActive;
+    public bool gameStarted;
 
+    public int BricksCount {
+        get
+        {
+            return _bricksCount;
+        }
+        set
+        {
+            _bricksCount = value;
+            if (_bricksCount == 0)
+            {
+                Win();
+            }
+        }
+    }
+
+    public int BallsCount
+    {
+        get
+        {
+            return _ballsCount;
+        }
+        set
+        {
+            _ballsCount = value;
+            if (_ballsCount == 0)
+            {
+                Lose();
+            }
+        }
+    }
 
     public int CurrentScoreCount {
-        get { return _currentScoreCount ; }
+        get
+        {
+            return _currentScoreCount ;
+        }
         set
         {
             _currentScoreCount = value;
@@ -33,6 +67,8 @@ public class GameMaster : MonoBehaviour  {
         }
     }
 
+    private int _ballsCount;
+    private int _bricksCount;
     private int _currentScoreCount;
     private float bonusChanse;
 
@@ -66,11 +102,33 @@ public class GameMaster : MonoBehaviour  {
         return reward;
     }
 
-    public void BallsDecrement()
+    public void BallsDecrement(BallController ball)
     {
         BallsCount--;
+
+
+
+        List<BallController> ballsToRemove = new List<BallController>();
+
+        foreach (BallController _ball in balls)
+        {
+            if (_ball == ball)
+            {
+                ballsToRemove.Add(_ball);
+            }
+        }
+
+        foreach (BallController _ball in ballsToRemove)
+        {
+            balls.Remove(_ball);
+        }
+
+
+
+
         if (BallsCount == 0)
         {
+            Debug.Log("!111111111111");
             Lose();
         }
     }
@@ -79,10 +137,6 @@ public class GameMaster : MonoBehaviour  {
     {
         BricksCount--;
         CurrentScoreCount = CurrentScoreCount + GetRewardForBrick(brick.GetBrickType());
-        if (BricksCount == 0)
-        {
-            Win();
-        }
 
         CreateBonusObject(brick);
     }
@@ -101,7 +155,8 @@ public class GameMaster : MonoBehaviour  {
     void Start()
     {
         // SetBonus(BonusTypes.SpeedBoost);
-        bonusChanse = 5;
+       bonusChanse = 5;
+       BallsCount = 1;
        StartCoroutine( LevelsReader.JsonReader());
     }
 
@@ -168,14 +223,20 @@ public class GameMaster : MonoBehaviour  {
     void Win()
     {
         LevelManager.instance.CompleteLevel(0);
-        finishPopup.OpenPanel();
+        finishPopup.panel.OpenPanel();
+        finishPopup.Configure(true);
     }
 
     void Lose()
     {
-       // Debug.Log("Lose");
+        finishPopup.panel.OpenPanel();
+        finishPopup.Configure(false);
     }
 
+    void RestartLevel()
+    {
+        SceneManager.LoadScene("Game");
+    }
 }
 
 

@@ -10,8 +10,6 @@ public class BallController : MonoBehaviour {
     private Vector2 _moveDirection = Vector3.up;
     private Transform _myTransform;
 
-    private delegate void BallDestroyEventHandler();
-
     private event BallDestroyEventHandler onBallDestroy;
 
     // Use this for initialization
@@ -30,7 +28,7 @@ public class BallController : MonoBehaviour {
 	
     // Update is called once per frame
 	void Update () {
-        _myTransform.Translate(_moveDirection * Time.deltaTime * _ballSpeed * _speedMultyplier);
+     if(GameMaster.instance.gameStarted)   _myTransform.Translate(_moveDirection * Time.deltaTime * _ballSpeed * _speedMultyplier);
         
 	}
 
@@ -50,7 +48,7 @@ public class BallController : MonoBehaviour {
             float leftX = collision.collider.bounds.center.x - collision.collider.bounds.size.x / 2;
             //Координата правого края
             float rightX = collision.collider.bounds.center.x + collision.collider.bounds.size.x / 2;
- 
+
 
             if (contact.point.x > centerX)
             {
@@ -65,6 +63,10 @@ public class BallController : MonoBehaviour {
             //  
 
         }
+        else if (collision.gameObject.CompareTag("ballDestroyer"))
+        {
+            Destroy(gameObject);
+        }
 
 
 
@@ -73,6 +75,11 @@ public class BallController : MonoBehaviour {
        // _moveDirection = Vector3.Reflect(_moveDirection, Quaternion.Euler(0, 0, 30 * f) * contact.normal);
 
 
+    }
+
+    void OnDestroy()
+    {
+        onBallDestroy(this);
     }
 
     public float GetSpeedMultyplier()

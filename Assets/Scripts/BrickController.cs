@@ -24,9 +24,15 @@ public class BrickController : MonoBehaviour {
             _brick.TakeDamage();
         }
     }
-        
+
+    public void BrickHit()
+    {
+        GameMaster.instance.brickHit.Play();
+    }
+
     public void BrickDestroy()
     {
+        GameMaster.instance.brickDestroy.Play();
         Destroy(gameObject);
     }
 

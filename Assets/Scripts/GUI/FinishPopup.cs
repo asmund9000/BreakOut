@@ -8,10 +8,10 @@ using UnityEngine.SceneManagement;
 public class FinishPopup : MonoBehaviour {
 
 	[Header("Labels")]
-	public Text winText;
-	public Text loseText;
+	public Text scoreLabel;
+    public Text loseLabel;
 
-	[Header("Buttons")]
+    [Header("Buttons")]
 	public Button menuButton;
 	public Button nextLevelButton;
 	public Button replayButton;
@@ -35,11 +35,25 @@ public class FinishPopup : MonoBehaviour {
             SceneManager.LoadScene(nextScene);
         });
 
+        menuButton.onClick.AddListener(() => ToMenu());
+        replayButton.onClick.AddListener(() => ReloadScene());
+
+    }
+    void ToMenu()
+    {
+        SceneManager.LoadScene("Levels");
     }
 
-	public void Configure(bool success) {
-		winText.gameObject.SetActive(success);
-		loseText.gameObject.SetActive(!success);
+    void ReloadScene()
+    {
+        SceneManager.LoadScene("Game");
+    }
+
+
+    public void Configure(bool success) {
 		nextLevelButton.gameObject.SetActive(success);
+        scoreLabel.enabled = success;
+        scoreLabel.text = "Score: " + GameMaster.instance.CurrentScoreCount;
+        loseLabel.enabled = !success;
 	}
 }
