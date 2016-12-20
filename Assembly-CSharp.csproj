@@ -54,6 +54,7 @@
      <Compile Include="Assets\Scenes\LevelManager.cs" />
      <Compile Include="Assets\Scripts\BallController.cs" />
      <Compile Include="Assets\Scripts\Bonuses\CloneBall.cs" />
+     <Compile Include="Assets\Scripts\Bonuses\IncreasePlatform.cs" />
      <Compile Include="Assets\Scripts\Bonuses\SpeedBoost.cs" />
      <Compile Include="Assets\Scripts\BrickController.cs" />
      <Compile Include="Assets\Scripts\Bricks\SimpleBreak.cs" />

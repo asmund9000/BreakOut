@@ -18,8 +18,9 @@ public class PlatformController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-      //  float pos = _myTransform.position.x + (Input.GetAxis("Horizontal") * _platformSpeed * Time.deltaTime);
-      //  _myTransform.position = new Vector2(pos, _myTransform.position.y);
+     
+        //  float pos = _myTransform.position.x + (Input.GetAxis("Horizontal") * _platformSpeed * Time.deltaTime);
+        //  _myTransform.position = new Vector2(pos, _myTransform.position.y);
     }
 
     void OnMouseDown()
@@ -50,7 +51,7 @@ public class PlatformController : MonoBehaviour {
         //}
 
         
-        float posX = Mathf.Clamp(curPosition.x, leftBorder + _platformBoundSize / 2, rightBorder - _platformBoundSize / 2);
+        float posX = Mathf.Clamp(curPosition.x, leftBorder + _platformBoundSize * _myTransform.localScale.x / 2, rightBorder - _platformBoundSize * _myTransform.localScale.x / 2);
         _myTransform.position = new Vector3(posX, curPosition.y);
 
 
@@ -62,6 +63,13 @@ public class PlatformController : MonoBehaviour {
         if (coll.gameObject.CompareTag("SpeedBoost"))
         {
             GameMaster.instance.SetBonus(BonusTypes.SpeedBoost);
+            Destroy(coll.gameObject);
+        }
+
+        if (coll.gameObject.CompareTag("IncreasePlatform"))
+        {
+            Debug.Log("Increase");
+            GameMaster.instance.SetBonus(BonusTypes.IncreasePlatform);
             Destroy(coll.gameObject);
         }
 

@@ -177,6 +177,15 @@ public class GameMaster : MonoBehaviour  {
                 speedBoost.ApplyBonus();
                 break;
             case BonusTypes.IncreasePlatform:
+                IncreasePlatform increasePlatform = GameObject.FindObjectOfType<IncreasePlatform>();
+                if (increasePlatform == null)
+                {
+                    GameObject go = new GameObject();
+                    go.name = "IncreasePlatform";
+                    increasePlatform = go.AddComponent<IncreasePlatform>();
+                }
+
+                increasePlatform.ApplyBonus();
                 break;
             case BonusTypes.CloneBall:
                 CloneBall cloneBall = GameObject.FindObjectOfType<CloneBall>();
