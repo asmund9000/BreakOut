@@ -2,12 +2,14 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
 public class LevelsGrid : MonoBehaviour {
 
+    public Button backButton;
 	[Header("Levels")]
 	public GridLayoutGroup grid;
 	public bool showStars;
@@ -25,7 +27,12 @@ public class LevelsGrid : MonoBehaviour {
 		}
 
 		LevelManager.instance.Reload();
-	}
+
+        backButton.onClick.AddListener(() =>
+        {
+            SceneManager.LoadScene("Menu");
+        });
+    }
 
 	public void RespawnButtons () {
 		// delete old buttons

@@ -79,6 +79,7 @@ public class GameMaster : MonoBehaviour  {
     {
       //  CreateBrickObject(6, 6);
        instance = this;
+        Time.timeScale = 1;
     }
 
 
@@ -104,6 +105,7 @@ public class GameMaster : MonoBehaviour  {
 
     public void BallsDecrement(BallController ball)
     {
+        Debug.Log("!!!!!!!!!!");
         BallsCount--;
 
 
@@ -123,21 +125,12 @@ public class GameMaster : MonoBehaviour  {
             balls.Remove(_ball);
         }
 
-
-
-
-        if (BallsCount == 0)
-        {
-            Debug.Log("!111111111111");
-            Lose();
-        }
     }
 
     public void BricksDecrement(IBrick brick)
     {
-        BricksCount--;
         CurrentScoreCount = CurrentScoreCount + GetRewardForBrick(brick.GetBrickType());
-
+        BricksCount--;
         CreateBonusObject(brick);
     }
 

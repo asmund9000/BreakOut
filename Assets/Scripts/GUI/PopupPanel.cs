@@ -79,8 +79,6 @@ public class PopupPanel : MonoBehaviour {
             resumeTimeScale = Time.timeScale;
             Time.timeScale = 0f;
 
-			//NTSound.PauseAllLoops();
-			//NTMusic.instance.Pause();
         }        
 
 		if (fade && fade.gameObject.activeSelf) {
@@ -256,8 +254,6 @@ public class PopupPanel : MonoBehaviour {
 		gameObject.SetActive (false);
 		if (scaleTimeToZero) {
 			Time.timeScale = resumeTimeScale;
-			//NTSound.UnpauseAllLoops();
-			//NTMusic.instance.UnPause();
 		}
 		onPanelClosed.Invoke();
 	}

@@ -65,6 +65,8 @@ public class BallController : MonoBehaviour {
         }
         else if (collision.gameObject.CompareTag("ballDestroyer"))
         {
+            
+            onBallDestroy(this);
             Destroy(gameObject);
         }
 
@@ -77,10 +79,10 @@ public class BallController : MonoBehaviour {
 
     }
 
-    void OnDestroy()
-    {
-        onBallDestroy(this);
-    }
+    //void OnDestroy()
+    //{
+        
+    //}
 
     public float GetSpeedMultyplier()
     {

@@ -8,10 +8,18 @@ public class PlatformController : MonoBehaviour {
     private Transform _myTransform;
     private Vector2 _screenPoint;
     private float _platformBoundSize;
+    private Vector2 _curScreenPoint;
+    private Vector2 _curPosition;
+    private float _leftBorder;
+    private float _rightBorder;
+    private Camera _mainCamera;
+    private Transform _cameraTransform;
 
     // Use this for initialization
     void Start() {
         _myTransform = transform;
+        _mainCamera = Camera.main;
+        _cameraTransform = _mainCamera.transform;
         _platformBoundSize = GetComponent<SpriteRenderer>().bounds.size.x;
         _platformSpeed = 4;
     }
@@ -37,13 +45,13 @@ public class PlatformController : MonoBehaviour {
     void OnMouseDrag()
     {
        
-        Vector2 curScreenPoint = new Vector2(Input.mousePosition.x, _screenPoint.y);
+        _curScreenPoint = new Vector2(Input.mousePosition.x, _screenPoint.y);
 
 
-        Vector2 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
+        _curPosition = _mainCamera.ScreenToWorldPoint(_curScreenPoint);
 
-        float leftBorder = Camera.main.transform.position.x - Camera.main.orthographicSize * Camera.main.aspect;
-        float rightBorder = Camera.main.transform.position.x + Camera.main.orthographicSize * Camera.main.aspect;
+         _leftBorder = _cameraTransform.position.x - _mainCamera.orthographicSize * _mainCamera.aspect;
+         _rightBorder = _cameraTransform.position.x + _mainCamera.orthographicSize * _mainCamera.aspect;
 
         //if (curPosition.x > leftBorder + _platformBoundSize / 2 && curPosition.x < rightBorder - _platformBoundSize / 2)
         //{
@@ -51,8 +59,8 @@ public class PlatformController : MonoBehaviour {
         //}
 
         
-        float posX = Mathf.Clamp(curPosition.x, leftBorder + _platformBoundSize * _myTransform.localScale.x / 2, rightBorder - _platformBoundSize * _myTransform.localScale.x / 2);
-        _myTransform.position = new Vector3(posX, curPosition.y);
+        float posX = Mathf.Clamp(_curPosition.x, _leftBorder + _platformBoundSize * _myTransform.localScale.x / 2, _rightBorder - _platformBoundSize * _myTransform.localScale.x / 2);
+        _myTransform.position = new Vector3(posX, _curPosition.y);
 
 
 

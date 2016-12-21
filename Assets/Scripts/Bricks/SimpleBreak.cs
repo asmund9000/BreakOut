@@ -28,8 +28,8 @@ public class SimpleBrick : IBrick
     public SimpleBrick(BrickController brickController)
     {
         this._brickController = brickController;
-        this._brickType = BrickTypes.Easy;
-        switch (brickController.brickType)
+        this._brickType = brickController.brickType;
+        switch (_brickType)
         {
             case BrickTypes.Easy:
                 Hp = 1;
